@@ -1,0 +1,9 @@
+dependencyResolutionManagement {
+    versionCatalogs {
+        libs {
+            from('com.raketeneinhorn.gradle:raketeneinhorn-gradle-version-catalog:0.4.2')
+        }
+    }
+}
+
+apply from: 'settings-repos.gradle'
