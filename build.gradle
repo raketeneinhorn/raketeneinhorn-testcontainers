@@ -10,7 +10,7 @@ plugins {
 	alias(libs.plugins.lombok)
 }
 
-group = 'com.raketeneinhorn.observability.spring.boot.starter'
+group = 'com.raketeneinhorn.testcontainers'
 version = scmVersion.version
 
 java {
@@ -22,12 +22,14 @@ java {
 dependencies {
 	implementation platform(SpringBootPlugin.BOM_COORDINATES)
 
-	implementation 'org.springframework.boot:spring-boot-starter'
-//	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	implementation 'org.springframework.boot:spring-boot-testcontainers'
+	implementation 'org.testcontainers:junit-jupiter'
+	implementation 'org.testcontainers:postgresql'
+
+//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
