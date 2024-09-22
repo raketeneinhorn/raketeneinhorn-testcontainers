@@ -14,6 +14,8 @@ import java.util.Set;
 
 import static com.raketeneinhorn.testcontainers.actuate.env.TestcontainersDevelopmentEnvironmentPostProcessor.EXPOSED_ENDPOINTS_PROPERTY_KEY;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 class TestcontainersDevelopmentEnvironmentPostProcessorTest {
 
@@ -42,20 +44,34 @@ class TestcontainersDevelopmentEnvironmentPostProcessorTest {
 
         @Test
         void addsTestcontainersEndpointToExposedEndpointsWhenNoneSet() {
-            @SuppressWarnings("unchecked")
-            Set<String> exposedEndpoints = (Set<String>) mockEnvironment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class);
-            assertThat(exposedEndpoints).isNullOrEmpty();
+            assertThat(mockEnvironment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class)).isNullOrEmpty();
 
             testcontainersDevelopmentEnvironmentPostProcessor.postProcessEnvironment(mockEnvironment, springApplication);
-            assertThat(mockEnvironment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class)).contains(TestcontainersEndpoint.ENDPOINT_ID);
+
+            @SuppressWarnings("unchecked")
+            Set<String> exposedEndpoints = (Set<String>) mockEnvironment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class);
+            assertThat(exposedEndpoints)
+                .hasSize(1)
+                .contains(TestcontainersEndpoint.ENDPOINT_ID);
         }
 
         @Test
         void addsTestcontainersEndpointToExistingExposedEndpoints() {
-            mockEnvironment.setProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, "health");
+            mockEnvironment.setProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, "foobar");
 
             testcontainersDevelopmentEnvironmentPostProcessor.postProcessEnvironment(mockEnvironment, springApplication);
-            assertThat(mockEnvironment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class)).contains("health", TestcontainersEndpoint.ENDPOINT_ID);
+
+            @SuppressWarnings("unchecked")
+            Set<String> exposedEndpoints = (Set<String>) mockEnvironment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class);
+            assertThat(exposedEndpoints)
+                .hasSize(2)
+                .contains("foobar", TestcontainersEndpoint.ENDPOINT_ID);
+        }
+
+        @Test
+        void emitsWarningWhenExposingEndpoint() {
+            testcontainersDevelopmentEnvironmentPostProcessor.postProcessEnvironment(mockEnvironment, springApplication);
+            verify(log, times(1)).warn("Automatically adding 'testcontainers' to exposed endpoints.");
         }
 
     }
