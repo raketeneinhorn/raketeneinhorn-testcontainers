@@ -1,6 +1,5 @@
 package com.raketeneinhorn.testcontainers.container.postgresql;
 
-
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.containers.wait.strategy.LogMessageWaitStrategy;
 import org.testcontainers.utility.DockerImageName;
