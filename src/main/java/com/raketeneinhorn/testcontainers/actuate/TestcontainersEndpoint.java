@@ -1,6 +1,5 @@
 package com.raketeneinhorn.testcontainers.actuate;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.boot.actuate.endpoint.annotation.Endpoint;
 import org.springframework.boot.actuate.endpoint.annotation.ReadOperation;
 import org.springframework.context.ApplicationContext;
