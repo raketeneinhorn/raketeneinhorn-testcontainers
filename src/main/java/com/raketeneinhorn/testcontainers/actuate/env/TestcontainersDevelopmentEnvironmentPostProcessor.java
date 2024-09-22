@@ -17,7 +17,7 @@ import java.util.Set;
 @Order
 public class TestcontainersDevelopmentEnvironmentPostProcessor implements EnvironmentPostProcessor {
 
-    private static final String EXPOSED_ENDPOINTS_PROPERTY_KEY = "management.endpoints.web.exposure.include";
+    protected static final String EXPOSED_ENDPOINTS_PROPERTY_KEY = "management.endpoints.web.exposure.include";
 
     private final Log log;
 
