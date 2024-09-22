@@ -28,7 +28,7 @@ public class TestcontainersDevelopmentEnvironmentPostProcessor implements Enviro
     @Override
     public void postProcessEnvironment(ConfigurableEnvironment environment, SpringApplication application) {
         @SuppressWarnings("unchecked")
-        Set<String> exposedEndpoints = (Set<String>) environment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class);
+        Set<String> exposedEndpoints = environment.getProperty(EXPOSED_ENDPOINTS_PROPERTY_KEY, Set.class);
         if (exposedEndpoints == null) {
             exposedEndpoints = new HashSet<>();
         }

@@ -75,7 +75,7 @@ class TestcontainersEndpointTest {
             final String beanName = "containerWithoutHttpEntrypoint";
             final String dockerImageName = "containerWithoutHttpEntrypoint-test-docker-image-name";
 
-            GenericContainer<?> container1 = registerGenericContainerMockBean(GenericContainer.class, beanName, dockerImageName);
+            registerGenericContainerMockBean(GenericContainer.class, beanName, dockerImageName);
 
             Map<String,TestcontainerInfo> testcontainers = testcontainersEndpointUnderTest.testcontainers();
             assertThat(testcontainers).hasSize(1);
@@ -126,6 +126,7 @@ class TestcontainersEndpointTest {
 
         @Override
         public void accept(TestcontainerInfo testcontainerInfo) {
+            throw new UnsupportedOperationException();
         }
 
     }
