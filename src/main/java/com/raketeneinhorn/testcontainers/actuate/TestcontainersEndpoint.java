@@ -7,30 +7,37 @@ import org.springframework.context.ApplicationContext;
 import org.testcontainers.containers.GenericContainer;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Endpoint(id = TestcontainersEndpoint.ENDPOINT_ID)
 public class TestcontainersEndpoint {
 
     public static final String ENDPOINT_ID = "testcontainers";
 
-    private final List<GenericContainer<?>> containers;
     private final ApplicationContext applicationContext;
 
-    private final Map<GenericContainer<?>,TestcontainerInfo> containerInfoCache = new HashMap<>();
+    private Map<String,TestcontainerInfo> testcontainerInfoCache = new HashMap<>();
+
+    public TestcontainersEndpoint(ApplicationContext applicationContext) {
+        this.applicationContext = applicationContext;
+        this.initTestcontainerInfoCache();
+    }
 
     @ReadOperation
     public Map<String,TestcontainerInfo> testcontainers() {
-        return containers.stream()
-            .map(container -> containerInfoCache.computeIfAbsent(container, this::buildTestcontainerInfo))
+        return testcontainerInfoCache;
+    }
+
+    private void initTestcontainerInfoCache() {
+        this.testcontainerInfoCache = applicationContext.getBeansOfType(GenericContainer.class).values().stream()
+            .map(this::buildTestcontainerInfo)
             .collect(Collectors.toMap(
-                TestcontainerInfo::getBeanName,
-                Function.identity()
+                    TestcontainerInfo::getBeanName,
+                    Function.identity()
             ));
+
     }
 
     private TestcontainerInfo buildTestcontainerInfo(GenericContainer<?> genericContainer) {
