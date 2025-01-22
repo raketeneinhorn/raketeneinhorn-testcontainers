@@ -28,6 +28,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-testcontainers'
 	implementation 'org.testcontainers:junit-jupiter'
 	implementation 'org.testcontainers:postgresql'
+	implementation libs.dasniko.testcontainers.keycloak
 
 //	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }

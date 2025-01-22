@@ -40,7 +40,7 @@ class TestcontainersEndpointTest {
                 Object testcontainerInfoRaw = invocationOnMock.getArgument(0);
                 assertThat(testcontainerInfoRaw).isOfAnyClassIn(TestcontainerInfo.class);
                 TestcontainerInfo testcontainerInfo = (TestcontainerInfo) testcontainerInfoRaw;
-                testcontainerInfo.setHttpEntrypoint(testHttpEntrypointURL);
+                testcontainerInfo.setHttpEntrypoints(Map.of("testHttpEntrypoint", testHttpEntrypointURL));
                 return null;
             }).when(testcontainerInfoCustomizer).accept(Mockito.any());
         }
@@ -82,7 +82,7 @@ class TestcontainersEndpointTest {
 
             TestcontainerInfo testcontainerInfo = testcontainers.get(beanName);
             assertTestcontainerInfoBasics(testcontainerInfo, beanName, dockerImageName);
-            assertThat(testcontainerInfo.getHttpEntrypoint()).isNull();
+            assertThat(testcontainerInfo.getHttpEntrypoints()).isNull();
         }
 
         @Test
@@ -103,9 +103,9 @@ class TestcontainersEndpointTest {
             TestcontainerInfo testcontainerInfo = testcontainers.get(beanName);
             assertTestcontainerInfoBasics(testcontainerInfo, beanName, dockerImageName);
 
-            assertThat(testcontainerInfo).extracting(TestcontainerInfo::getHttpEntrypoint)
+            assertThat(testcontainerInfo).extracting(TestcontainerInfo::getHttpEntrypoints)
                     .isNotNull()
-                    .isEqualTo(testHttpEntrypointURL);
+                    .isEqualTo(Map.of("testHttpEntrypoint", testHttpEntrypointURL));
         }
 
         @Test
