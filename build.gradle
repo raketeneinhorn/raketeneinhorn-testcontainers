@@ -30,7 +30,7 @@ dependencies {
 	implementation 'org.testcontainers:postgresql'
 	implementation libs.dasniko.testcontainers.keycloak
 
-//	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 }
 
 test {
