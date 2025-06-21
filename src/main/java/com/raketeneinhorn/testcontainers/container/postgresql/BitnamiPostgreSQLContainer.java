@@ -6,7 +6,7 @@ import org.testcontainers.utility.DockerImageName;
 
 public class BitnamiPostgreSQLContainer<SELF extends BitnamiPostgreSQLContainer<SELF>> extends PostgreSQLContainer<SELF> {
 
-    private static final String IMAGE_NAME = "bitnami/postgresql:16.4.0";
+    private static final String IMAGE_NAME = "bitnami/postgresql:17.5.0";
     private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse(IMAGE_NAME).asCompatibleSubstituteFor(PostgreSQLContainer.IMAGE);
 
     public BitnamiPostgreSQLContainer() {
