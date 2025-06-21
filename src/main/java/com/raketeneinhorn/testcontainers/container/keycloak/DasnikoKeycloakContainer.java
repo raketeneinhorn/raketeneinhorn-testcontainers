@@ -18,8 +18,8 @@ public class DasnikoKeycloakContainer extends ExtendableKeycloakContainer<Dasnik
         try {
             httpEntrypoints.put("authServerUrl", URI.create(this.getAuthServerUrl()).toURL());
             httpEntrypoints.put("mgmtServerUrl", URI.create(this.getMgmtServerUrl()).toURL());
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
+        } catch (MalformedURLException ex) {
+            throw new IllegalArgumentException(ex);
         }
 
         testcontainerInfo.setHttpEntrypoints(httpEntrypoints);
