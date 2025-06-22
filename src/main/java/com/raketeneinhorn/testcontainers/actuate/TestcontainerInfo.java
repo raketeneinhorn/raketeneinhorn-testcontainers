@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.net.URI;
-import java.net.URL;
 import java.util.Map;
 
 @Builder

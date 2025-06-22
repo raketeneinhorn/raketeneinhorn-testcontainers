@@ -8,9 +8,7 @@ import org.springframework.context.support.StaticApplicationContext;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
