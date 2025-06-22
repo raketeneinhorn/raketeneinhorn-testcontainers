@@ -19,6 +19,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
+@SuppressWarnings("java:S2160")
 public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentContainer> implements TestcontainerInfoCustomizer {
 
     private static final String IMAGE_NAME = "openpolicyagent/opa";

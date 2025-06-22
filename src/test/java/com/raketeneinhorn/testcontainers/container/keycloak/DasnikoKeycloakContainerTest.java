@@ -17,7 +17,8 @@ class DasnikoKeycloakContainerTest {
         @Test
         void throwsIllegalArgumentExceptionWhenInfoUrlIsMalformed() {
             doReturn("h:t:t:p:/malformed-url").when(dasnikoKeycloakContainerMock).getAuthServerUrl();
-            assertThrows(IllegalArgumentException.class, () -> dasnikoKeycloakContainerMock.customize(TestcontainerInfo.builder().build()));
+            TestcontainerInfo testcontainerInfoMock = mock(TestcontainerInfo.class);
+            assertThrows(IllegalArgumentException.class, () -> dasnikoKeycloakContainerMock.customize(testcontainerInfoMock));
         }
 
     }

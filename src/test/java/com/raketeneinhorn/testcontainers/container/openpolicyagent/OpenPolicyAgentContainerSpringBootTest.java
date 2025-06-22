@@ -54,9 +54,9 @@ class OpenPolicyAgentContainerSpringBootTest {
 
         @Bean
         public OpenPolicyAgentContainerCustomizer openPolicyAgentContainerCustomizer() {
-            return openPolicyAgentContainer -> {
-                openPolicyAgentContainer.withLogLevel(OpenPolicyAgentContainer.LogLevel.DEBUG);
-                openPolicyAgentContainer.withPoliciesClassPathResource(new ClassPathResource("/openpolicyagent/policies"));
+            return opac -> {
+                opac.withLogLevel(OpenPolicyAgentContainer.LogLevel.DEBUG);
+                opac.withPoliciesClassPathResource(new ClassPathResource("/openpolicyagent/policies"));
             };
         }
 

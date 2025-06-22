@@ -18,7 +18,8 @@ class OpenPolicyAgentContainerTest {
         void throwsIllegalArgumentExceptionWhenInfoUrlIsMalformed() {
             doReturn(1234).when(openPolicyAgentContainer).getMappedPort(8181);
             doReturn("h:t:t:p:/malformed-url").when(openPolicyAgentContainer).getHealthUrl();
-            assertThrows(IllegalArgumentException.class, () -> openPolicyAgentContainer.customize(TestcontainerInfo.builder().build()));
+            TestcontainerInfo testcontainerInfoMock = mock(TestcontainerInfo.class);
+            assertThrows(IllegalArgumentException.class, () -> openPolicyAgentContainer.customize(testcontainerInfoMock));
         }
 
     }
