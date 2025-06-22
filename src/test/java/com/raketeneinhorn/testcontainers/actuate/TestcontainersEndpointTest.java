@@ -42,7 +42,7 @@ class TestcontainersEndpointTest {
                 TestcontainerInfo testcontainerInfo = (TestcontainerInfo) testcontainerInfoRaw;
                 testcontainerInfo.setHttpEntrypoints(Map.of("testHttpEntrypoint", testHttpEntrypointURL));
                 return null;
-            }).when(testcontainerInfoCustomizer).accept(Mockito.any());
+            }).when(testcontainerInfoCustomizer).customize(Mockito.any());
         }
 
         this.rebuildTestcontainersEndpointAfterRegisteringNewBean();
@@ -125,7 +125,7 @@ class TestcontainersEndpointTest {
         }
 
         @Override
-        public void accept(TestcontainerInfo testcontainerInfo) {
+        public void customize(TestcontainerInfo testcontainerInfo) {
             throw new UnsupportedOperationException();
         }
 

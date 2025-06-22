@@ -2,12 +2,9 @@ package com.raketeneinhorn.testcontainers.container.openpolicyagent;
 
 import com.raketeneinhorn.testcontainers.actuate.TestcontainerInfo;
 import com.raketeneinhorn.testcontainers.actuate.TestcontainerInfoCustomizer;
-import com.raketeneinhorn.testcontainers.condition.NotOnKubernetesCondition;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.jetbrains.annotations.NotNull;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.core.io.ClassPathResource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
@@ -22,9 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
-@TestConfiguration(proxyBeanMethods = false)
-@Conditional(NotOnKubernetesCondition.class)
-@SuppressWarnings("java:S2160") // "equals"-method would be same as parent class
 public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentContainer> implements TestcontainerInfoCustomizer {
 
     private static final String IMAGE_NAME = "openpolicyagent/opa";
@@ -35,7 +29,7 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
     private static final String DATA_PATH = "/v1/data/"; // NOSONAR
     private static final String POLICIES_CONTAINER_PATH = "/policies";
 
-    private PoliciesClassPathResource policiesClassPathResource = new PoliciesClassPathResource(POLICIES_CONTAINER_PATH);
+    private ClassPathResource policiesClassPathResource = new ClassPathResource(POLICIES_CONTAINER_PATH);
     private LogLevel logLevel = LogLevel.INFO;
 
     public OpenPolicyAgentContainer() {
@@ -65,14 +59,13 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
         super.doStart();
     }
 
-    public void withPoliciesClassPathResource(@NotNull PoliciesClassPathResource policiesClassPathResource) {
+    public void withPoliciesClassPathResource(@NotNull ClassPathResource policiesClassPathResource) {
         this.policiesClassPathResource = policiesClassPathResource;
     }
 
     public void withLogLevel(@NotNull LogLevel logLevel) {
         this.logLevel = logLevel;
     }
-
 
     public String getDataUrl() {
         return this.buildUrl(DATA_PATH);
@@ -87,7 +80,7 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
     }
 
     @Override
-    public void accept(TestcontainerInfo testcontainerInfo) {
+    public void customize(TestcontainerInfo testcontainerInfo) {
         Map<String, URL> httpEntrypoints = new HashMap<>();
         try {
             httpEntrypoints.put("dataUrl", URI.create(this.getDataUrl()).toURL());
@@ -110,14 +103,6 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
 
         private String getCommandValue() {
             return commandValue;
-        }
-
-    }
-
-    public static class PoliciesClassPathResource extends ClassPathResource {
-
-        public PoliciesClassPathResource(String path) {
-            super(path);
         }
 
     }

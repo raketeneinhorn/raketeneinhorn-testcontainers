@@ -2,20 +2,19 @@ package com.raketeneinhorn.testcontainers.container.openpolicyagent.configuratio
 
 import com.raketeneinhorn.testcontainers.condition.NotOnKubernetesCondition;
 import com.raketeneinhorn.testcontainers.container.openpolicyagent.OpenPolicyAgentContainer;
-import org.springframework.boot.test.context.TestConfiguration;
+import com.raketeneinhorn.testcontainers.container.openpolicyagent.OpenPolicyAgentContainerCustomizer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Conditional;
 
 import java.util.Optional;
 
-@TestConfiguration(proxyBeanMethods = false)
 @Conditional(NotOnKubernetesCondition.class)
 public class OpenPolicyAgentContainerConfiguration {
 
     @Bean
-    public OpenPolicyAgentContainer openPolicyAgentContainer(Optional<OpenPolicyAgentContainer.PoliciesClassPathResource> policiesClassPathResource) {
+    public OpenPolicyAgentContainer openPolicyAgentContainer(Optional<OpenPolicyAgentContainerCustomizer> openPolicyAgentContainerCustomizer) {
         try (OpenPolicyAgentContainer openPolicyAgentContainer = new OpenPolicyAgentContainer()) {
-            policiesClassPathResource.ifPresent(openPolicyAgentContainer::withPoliciesClassPathResource);
+            openPolicyAgentContainerCustomizer.ifPresent(c -> c.customize(openPolicyAgentContainer));
             return openPolicyAgentContainer;
         }
     }

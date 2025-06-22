@@ -17,6 +17,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -52,8 +53,11 @@ class OpenPolicyAgentContainerSpringBootTest {
     public static class TestPoliciesConfiguration {
 
         @Bean
-        public OpenPolicyAgentContainer.PoliciesClassPathResource policiesClassPathResource() {
-            return new OpenPolicyAgentContainer.PoliciesClassPathResource("/openpolicyagent/policies");
+        public OpenPolicyAgentContainerCustomizer openPolicyAgentContainerCustomizer() {
+            return openPolicyAgentContainer -> {
+                openPolicyAgentContainer.withLogLevel(OpenPolicyAgentContainer.LogLevel.DEBUG);
+                openPolicyAgentContainer.withPoliciesClassPathResource(new ClassPathResource("/openpolicyagent/policies"));
+            };
         }
 
     }

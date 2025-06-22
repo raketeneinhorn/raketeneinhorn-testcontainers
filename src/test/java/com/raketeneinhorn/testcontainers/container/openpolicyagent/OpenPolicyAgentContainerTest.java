@@ -1,5 +1,6 @@
 package com.raketeneinhorn.testcontainers.container.openpolicyagent;
 
+import com.raketeneinhorn.testcontainers.actuate.TestcontainerInfo;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +18,7 @@ class OpenPolicyAgentContainerTest {
         void throwsIllegalArgumentExceptionWhenInfoUrlIsMalformed() {
             doReturn(1234).when(openPolicyAgentContainer).getMappedPort(8181);
             doReturn("h:t:t:p:/malformed-url").when(openPolicyAgentContainer).getHealthUrl();
-            assertThrows(IllegalArgumentException.class, () -> openPolicyAgentContainer.accept(null));
+            assertThrows(IllegalArgumentException.class, () -> openPolicyAgentContainer.customize(TestcontainerInfo.builder().build()));
         }
 
     }
