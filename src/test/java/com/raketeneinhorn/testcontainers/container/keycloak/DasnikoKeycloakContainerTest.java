@@ -1,5 +1,6 @@
 package com.raketeneinhorn.testcontainers.container.keycloak;
 
+import com.raketeneinhorn.testcontainers.actuate.TestcontainerInfo;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
@@ -15,8 +16,9 @@ class DasnikoKeycloakContainerTest {
 
         @Test
         void throwsIllegalArgumentExceptionWhenInfoUrlIsMalformed() {
-            doReturn("ht:t:p:/malformed-url").when(dasnikoKeycloakContainerMock).getAuthServerUrl();
-            assertThrows(IllegalArgumentException.class, () -> dasnikoKeycloakContainerMock.accept(null));
+            doReturn("h:t:t:p:/malformed-url").when(dasnikoKeycloakContainerMock).getAuthServerUrl();
+            TestcontainerInfo testcontainerInfoMock = mock(TestcontainerInfo.class);
+            assertThrows(IllegalArgumentException.class, () -> dasnikoKeycloakContainerMock.customize(testcontainerInfoMock));
         }
 
     }

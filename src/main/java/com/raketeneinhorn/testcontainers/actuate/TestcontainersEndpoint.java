@@ -46,7 +46,7 @@ public class TestcontainersEndpoint {
             .build();
 
         if (genericContainer instanceof TestcontainerInfoCustomizer testcontainerInfoCustomizer) {
-            testcontainerInfoCustomizer.accept(testcontainerInfo);
+            testcontainerInfoCustomizer.customize(testcontainerInfo);
         }
 
         return testcontainerInfo;

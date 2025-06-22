@@ -13,7 +13,7 @@ import java.util.Map;
 public class DasnikoKeycloakContainer extends ExtendableKeycloakContainer<DasnikoKeycloakContainer> implements TestcontainerInfoCustomizer {
 
     @Override
-    public void accept(TestcontainerInfo testcontainerInfo) {
+    public void customize(TestcontainerInfo testcontainerInfo) {
         Map<String,URL> httpEntrypoints = new HashMap<>();
         try {
             httpEntrypoints.put("authServerUrl", URI.create(this.getAuthServerUrl()).toURL());
