@@ -13,8 +13,8 @@ import java.util.Optional;
 public class OpenPolicyAgentContainerConfiguration {
 
     @Bean
-    public OpenPolicyAgentContainer<?> openPolicyAgentContainer(Optional<OpenPolicyAgentContainer.PoliciesClassPathResource> policiesClassPathResource) {
-        try (OpenPolicyAgentContainer<?> openPolicyAgentContainer = new OpenPolicyAgentContainer<>()) {
+    public OpenPolicyAgentContainer openPolicyAgentContainer(Optional<OpenPolicyAgentContainer.PoliciesClassPathResource> policiesClassPathResource) {
+        try (OpenPolicyAgentContainer openPolicyAgentContainer = new OpenPolicyAgentContainer()) {
             policiesClassPathResource.ifPresent(openPolicyAgentContainer::withPoliciesClassPathResource);
             return openPolicyAgentContainer;
         }

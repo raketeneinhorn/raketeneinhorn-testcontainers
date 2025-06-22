@@ -42,7 +42,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class OpenPolicyAgentContainerSpringBootTest {
 
-    private final OpenPolicyAgentContainer<?> openPolicyAgentContainer;
+    private final OpenPolicyAgentContainer openPolicyAgentContainer;
 
     private final MockMvc mockMvc;
 

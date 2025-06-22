@@ -24,7 +24,7 @@ import java.util.Map;
 @Slf4j
 @TestConfiguration(proxyBeanMethods = false)
 @Conditional(NotOnKubernetesCondition.class)
-public class OpenPolicyAgentContainer<SELF extends OpenPolicyAgentContainer<SELF>> extends GenericContainer<SELF>  implements TestcontainerInfoCustomizer {
+public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentContainer> implements TestcontainerInfoCustomizer {
 
     private static final String IMAGE_NAME = "openpolicyagent/opa";
     private static final DockerImageName DEFAULT_IMAGE_NAME = DockerImageName.parse(IMAGE_NAME);

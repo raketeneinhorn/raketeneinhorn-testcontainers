@@ -8,7 +8,7 @@ import static org.mockito.Mockito.*;
 
 class OpenPolicyAgentContainerTest {
 
-    private final OpenPolicyAgentContainer<?> openPolicyAgentContainer = mock(OpenPolicyAgentContainer.class, CALLS_REAL_METHODS);
+    private final OpenPolicyAgentContainer openPolicyAgentContainer = mock(OpenPolicyAgentContainer.class, CALLS_REAL_METHODS);
 
     @Nested
     class Accept {
