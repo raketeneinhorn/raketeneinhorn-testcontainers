@@ -12,8 +12,8 @@ public class BitnamiPostgreSQLContainerConfiguration {
 
     @Bean
     @ServiceConnection
-    public PostgreSQLContainer<?> postgreSQLContainer() {
-        try (PostgreSQLContainer<?> postgreSQLContainer = new BitnamiPostgreSQLContainer<>()) {
+    public PostgreSQLContainer<BitnamiPostgreSQLContainer> postgreSQLContainer() {
+        try (PostgreSQLContainer<BitnamiPostgreSQLContainer> postgreSQLContainer = new BitnamiPostgreSQLContainer()) {
             return postgreSQLContainer
                 .withReuse(true);
         }
