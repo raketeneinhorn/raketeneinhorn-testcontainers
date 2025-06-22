@@ -24,6 +24,7 @@ import java.util.Map;
 @Slf4j
 @TestConfiguration(proxyBeanMethods = false)
 @Conditional(NotOnKubernetesCondition.class)
+@SuppressWarnings("java:S2160") // "equals"-method would be same as parent class
 public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentContainer> implements TestcontainerInfoCustomizer {
 
     private static final String IMAGE_NAME = "openpolicyagent/opa";
@@ -31,7 +32,7 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
 
     private static final int OPEN_POLICY_AGENT_PORT = 8181;
     private static final String HEALTH_PATH = "/health";
-    private static final String DATA_PATH = "/v1/data/";
+    private static final String DATA_PATH = "/v1/data/"; // NOSONAR
     private static final String POLICIES_CONTAINER_PATH = "/policies";
 
     private PoliciesClassPathResource policiesClassPathResource = new PoliciesClassPathResource(POLICIES_CONTAINER_PATH);
