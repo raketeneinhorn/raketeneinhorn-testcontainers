@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.net.URI;
 import java.net.URL;
 import java.util.Map;
 
@@ -19,6 +20,6 @@ public class TestcontainerInfo {
 
     @Setter
     @JsonInclude(JsonInclude.Include.NON_NULL)
-    private Map<String,URL> httpEntrypoints;
+    private Map<String, URI> httpEntrypoints;
 
 }
