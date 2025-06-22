@@ -8,9 +8,7 @@ import org.springframework.context.support.StaticApplicationContext;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.utility.DockerImageName;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
 import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -30,7 +28,7 @@ class TestcontainersEndpointTest {
         return this.registerGenericContainerMockBean(containerClass, beanName, dockerImageName, null);
     }
 
-    private <T extends GenericContainer<?>> T registerGenericContainerMockBean(Class<T> containerClass, String beanName, String dockerImageName, URL testHttpEntrypointURL) {
+    private <T extends GenericContainer<?>> T registerGenericContainerMockBean(Class<T> containerClass, String beanName, String dockerImageName, URI testHttpEntrypointURI) {
         T container = Mockito.mock(containerClass);
         Mockito.when(container.getDockerImageName()).thenReturn(dockerImageName);
         staticApplicationContext.registerBean(beanName, GenericContainer.class, () -> container);
@@ -40,7 +38,7 @@ class TestcontainersEndpointTest {
                 Object testcontainerInfoRaw = invocationOnMock.getArgument(0);
                 assertThat(testcontainerInfoRaw).isOfAnyClassIn(TestcontainerInfo.class);
                 TestcontainerInfo testcontainerInfo = (TestcontainerInfo) testcontainerInfoRaw;
-                testcontainerInfo.setHttpEntrypoints(Map.of("testHttpEntrypoint", testHttpEntrypointURL));
+                testcontainerInfo.setHttpEntrypoints(Map.of("testHttpEntrypoint", testHttpEntrypointURI));
                 return null;
             }).when(testcontainerInfoCustomizer).customize(Mockito.any());
         }
@@ -86,16 +84,16 @@ class TestcontainersEndpointTest {
         }
 
         @Test
-        void providesMapWithSingleContainerWithHttpEntrypoint() throws MalformedURLException {
+        void providesMapWithSingleContainerWithHttpEntrypoint() {
             this.providesMapWithSingleContainerWithHttpEntrypoint(1);
         }
 
-        private void providesMapWithSingleContainerWithHttpEntrypoint(int expectedSize) throws MalformedURLException {
+        private void providesMapWithSingleContainerWithHttpEntrypoint(int expectedSize) {
             final String beanName = "containerWithHttpEntrypoint";
             final String dockerImageName = "containerWithHttpEntrypoint-test-docker-image-name";
-            final URL testHttpEntrypointURL = URI.create("http://example.com/raketeneinhorn").toURL();
+            final URI testHttpEntrypointURU = URI.create("http://example.com/raketeneinhorn");
 
-            registerGenericContainerMockBean(GenericContainerWithHttpEntrypoint.class, beanName, dockerImageName, testHttpEntrypointURL);
+            registerGenericContainerMockBean(GenericContainerWithHttpEntrypoint.class, beanName, dockerImageName, testHttpEntrypointURU);
 
             Map<String,TestcontainerInfo> testcontainers = testcontainersEndpointUnderTest.testcontainers();
             assertThat(testcontainers).hasSize(expectedSize);
@@ -105,11 +103,11 @@ class TestcontainersEndpointTest {
 
             assertThat(testcontainerInfo).extracting(TestcontainerInfo::getHttpEntrypoints)
                     .isNotNull()
-                    .isEqualTo(Map.of("testHttpEntrypoint", testHttpEntrypointURL));
+                    .isEqualTo(Map.of("testHttpEntrypoint", testHttpEntrypointURU));
         }
 
         @Test
-        void providesMapWithTwoContainers() throws MalformedURLException {
+        void providesMapWithTwoContainers(){
             this.providesMapWithSingleContainerWithoutHttpEntrypoint();
             this.providesMapWithSingleContainerWithHttpEntrypoint(2);
 

@@ -12,10 +12,7 @@ import org.testcontainers.containers.wait.strategy.Wait;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
-import java.net.MalformedURLException;
 import java.net.URI;
-import java.net.URL;
-import java.util.HashMap;
 import java.util.Map;
 
 @Slf4j
@@ -82,15 +79,10 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
 
     @Override
     public void customize(TestcontainerInfo testcontainerInfo) {
-        Map<String, URL> httpEntrypoints = new HashMap<>();
-        try {
-            httpEntrypoints.put("dataUrl", URI.create(this.getDataUrl()).toURL());
-            httpEntrypoints.put("healthUrl", URI.create(this.getHealthUrl()).toURL());
-        } catch (MalformedURLException ex) {
-            throw new IllegalArgumentException(ex);
-        }
-
-        testcontainerInfo.setHttpEntrypoints(httpEntrypoints);
+        testcontainerInfo.setHttpEntrypoints(Map.of(
+            "dataUrl", URI.create(this.getDataUrl()),
+            "healthUrl", URI.create(this.getHealthUrl())
+        ));
     }
 
     @RequiredArgsConstructor
