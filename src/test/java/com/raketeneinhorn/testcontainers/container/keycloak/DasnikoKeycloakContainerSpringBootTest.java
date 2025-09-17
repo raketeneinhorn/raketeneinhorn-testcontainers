@@ -37,7 +37,7 @@ class DasnikoKeycloakContainerSpringBootTest {
     @Test
     void dasnikoKeycloakContainerIsRunning() {
         assertTrue(dasnikoKeycloakContainer.isRunning());
-        assertThat(dasnikoKeycloakContainer.getDockerImageName()).isEqualTo("quay.io/keycloak/keycloak:26.2");
+        assertThat(dasnikoKeycloakContainer.getDockerImageName()).isEqualTo("quay.io/keycloak/keycloak:26.3");
     }
 
     @Test
