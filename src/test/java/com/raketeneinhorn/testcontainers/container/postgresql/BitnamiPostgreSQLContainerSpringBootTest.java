@@ -24,7 +24,7 @@ class BitnamiPostgreSQLContainerSpringBootTest {
     @Test
     void bitnamiPostgreSQLContainerIsRunning() {
         assertTrue(bitnamiPostgreSQLContainer.isRunning());
-        assertThat(bitnamiPostgreSQLContainer.getDockerImageName()).isEqualTo("bitnami/postgresql:17.5.0");
+        assertThat(bitnamiPostgreSQLContainer.getDockerImageName()).isEqualTo("bitnamilegacy/postgresql:17.5.0");
     }
 
 }
