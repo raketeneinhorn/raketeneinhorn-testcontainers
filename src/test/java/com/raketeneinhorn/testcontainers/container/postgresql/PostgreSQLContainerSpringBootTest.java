@@ -1,6 +1,6 @@
 package com.raketeneinhorn.testcontainers.container.postgresql;
 
-import com.raketeneinhorn.testcontainers.container.postgresql.configuration.BitnamiPostgreSQLContainerConfiguration;
+import com.raketeneinhorn.testcontainers.container.postgresql.configuration.PostgreSQLContainerConfiguration;
 import lombok.RequiredArgsConstructor;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.SpringBootConfiguration;
@@ -16,15 +16,15 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @RequiredArgsConstructor
 @SpringBootTest
 @SpringBootConfiguration
-@ContextConfiguration(classes = BitnamiPostgreSQLContainerConfiguration.class)
-class BitnamiPostgreSQLContainerSpringBootTest {
+@ContextConfiguration(classes = PostgreSQLContainerConfiguration.class)
+class PostgreSQLContainerSpringBootTest {
 
-    private final PostgreSQLContainer<?> bitnamiPostgreSQLContainer;
+    private final PostgreSQLContainer<?> postgreSQLContainer;
 
     @Test
-    void bitnamiPostgreSQLContainerIsRunning() {
-        assertTrue(bitnamiPostgreSQLContainer.isRunning());
-        assertThat(bitnamiPostgreSQLContainer.getDockerImageName()).isEqualTo("bitnamilegacy/postgresql:17.5.0");
+    void postgreSQLContainerIsRunning() {
+        assertTrue(postgreSQLContainer.isRunning());
+        assertThat(postgreSQLContainer.getDockerImageName()).isEqualTo("postgres:18");
     }
 
 }
