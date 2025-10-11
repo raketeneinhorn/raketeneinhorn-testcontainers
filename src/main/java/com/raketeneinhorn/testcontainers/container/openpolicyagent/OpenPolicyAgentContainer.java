@@ -9,6 +9,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.testcontainers.containers.GenericContainer;
 import org.testcontainers.containers.output.Slf4jLogConsumer;
 import org.testcontainers.containers.wait.strategy.Wait;
+import org.testcontainers.shaded.org.apache.commons.lang3.StringUtils;
 import org.testcontainers.utility.DockerImageName;
 import org.testcontainers.utility.MountableFile;
 
@@ -65,6 +66,10 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
         this.logLevel = logLevel;
     }
 
+    public String getEndpointUrl() {
+        return this.buildUrl(StringUtils.EMPTY);
+    }
+
     public String getDataUrl() {
         return this.buildUrl(DATA_PATH);
     }
@@ -80,6 +85,7 @@ public class OpenPolicyAgentContainer extends GenericContainer<OpenPolicyAgentCo
     @Override
     public void customize(TestcontainerInfo testcontainerInfo) {
         testcontainerInfo.setHttpEntrypoints(Map.of(
+            "endpointUrl", URI.create(this.getEndpointUrl()),
             "dataUrl", URI.create(this.getDataUrl()),
             "healthUrl", URI.create(this.getHealthUrl())
         ));
