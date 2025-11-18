@@ -1,7 +1,7 @@
 dependencyResolutionManagement {
     versionCatalogs {
         libs {
-            from('com.raketeneinhorn.gradle:raketeneinhorn-gradle-version-catalog:2.0.0')
+            from('com.raketeneinhorn.gradle:raketeneinhorn-gradle-version-catalog:3.0.0')
         }
     }
 }
